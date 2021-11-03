@@ -6,6 +6,7 @@ import static utils.KeyboardUtil.readString;
 import java.sql.SQLException;
 import java.util.List;
 
+import parkingProject.dao.CarParkingDAO;
 import parkingProject.exception.ParkingException;
 import parkingProject.service.CarParkingService;
 import parkingProject.service.CarParkingServiceImpl;
@@ -18,6 +19,7 @@ public class CarParkingApp {
 
 	public void menuNo() {
 		try {
+			User user = new User();
 			boolean islogin = false;
 		System.out.println("-----------------------------------");
 		System.out.println("1. 회원가입 2.로그인 3. 구경하기 0. 종료");
@@ -31,11 +33,10 @@ public class CarParkingApp {
 			
 		} else if (menuNo == 2) {
 			System.out.println("[로그인]");
-			User user = login();
+			user= login();
 			boolean findLogin = carparking.isLoging(user);
 			islogin = findLogin;
-			if(islogin) {
-			System.out.println("[### 로그인이 완료되었습니다. ]");
+			while(islogin) {
 			System.out.println("----------------------");
 			System.out.print("1.로그인 주소로 검색하기 " + "\t");
 			System.out.print("2.다른 지역구 검색하기 " + "\t");
@@ -46,20 +47,23 @@ public class CarParkingApp {
 			int inMenuNo = readInt();
 			if(inMenuNo == 1) {
 				System.out.println("[로그인 주소로 검색하기]");
-				loginAdress();
+				loginAdress(user);
 			} else if(inMenuNo == 2) {
 				System.out.println("[다른 지역구 검색하기]");
 				searchAdress();
 			} else if(inMenuNo == 3) {
 				System.out.println("[주소 수정하기]");
-				correctUser();
+				user = login();
+				correctUser(user);
 			} else if(inMenuNo == 4) {
 				System.out.println("[탈퇴하기]");
-				removeUser();
+				user= login();
+				removeUser(user);
 				islogin = false;
 			} else if(inMenuNo == 0) {
 				System.out.println("[로그아웃]");
 				islogin = false;
+				
 				System.out.println("### 로그아웃이 완료되었습니다.");
 			}
 			}
@@ -78,7 +82,7 @@ public class CarParkingApp {
 			System.out.println("###[오류] 입력 오류입니다.");
 			ex.printStackTrace();
 		}
-		
+		menuNo();
 	}
 
 
@@ -105,11 +109,10 @@ public class CarParkingApp {
 			System.out.print("주차장 기본 시간(분) : " + park.getBasicTime() + "분"+ "\t");
 			System.out.print("주차장 추가 금액 : 분 당 " + park.getAddPrice()+ "\t");
 			System.out.println("주차장 추가 시간(분) : " + park.getAddTime() + "분");
-		System.out.println("----------------------------------------------------------");
+			System.out.println("----------------------------------------------------------");
 		}
 	}
 	private static void joinMembership() throws SQLException{
-		System.out.println("[회원가입]");
 		System.out.println("아이디 : ");
 		String id = readString();
 		
@@ -136,24 +139,25 @@ public class CarParkingApp {
 		
 	
 	}
+
 	private static User login() throws SQLException {
-		System.out.println("[로그인]");
 		System.out.println("아이디 : ");
 		String id = readString();
 		System.out.println("비밀번호 : ");
 		String password = readString();
-		
 		User user = carparking.selectUser(id, password);
 		return user;
 		
 	}
-	private static void loginAdress() throws SQLException {
-		User user = login();
-		System.out.println("[회원가입시 작성된 주소로 검색됩니다.]");
-		List<Parking> parks = carparking.getUserAdressPaking(user);
-		replayListParking(parks);
-		System.out.println("조회가 완료되었습니다.");
+
+	private static void loginAdress(User user) throws SQLException {
+		User findUser = new User();
 		
+		System.out.println("[회원가입시 작성된 주소로 검색됩니다.]");
+		findUser = user;
+		List<Parking> parks = carparking.getUserAdressPaking(findUser);
+		replayListParking(parks);
+		System.out.println("조회가 완료되었습니다.");		
 	}
 	private static void searchAdress() throws SQLException{
 		System.out.println("서울시 **구 **동");
@@ -164,17 +168,20 @@ public class CarParkingApp {
 		replayListParking(parks);
 		System.out.println("조회가 완료되었습니다. ");
 	}
-	private static void removeUser() throws SQLException {
+	private static void removeUser(User user) throws SQLException {
+		
 		System.out.println("[탈퇴하기]");
-		User user = login();
 		carparking.removeUser(user);
 		System.out.println("[탈퇴가 완료되었습니다.]");
 	}
-	private static void correctUser() throws SQLException {
+	private static void correctUser(User user) throws SQLException {
+		
 		System.out.println("[정보수정하기]");
-		User user = login();
 		System.out.println("변경할 주소를 입력하세요 : ");
 		String newAdress = readString();
+		user.setId(user.getId());
+		user.setName(user.getName());
+		user.setEmailAdress(user.getEmailAdress());;
 		user.setAdress(newAdress);
 		carparking.reviseUser(user);
 		System.out.println("수정이 완료되었습니다. ");

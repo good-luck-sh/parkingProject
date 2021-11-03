@@ -63,4 +63,6 @@ public interface CarParkingService {
 	 * @throws SQLException DB Access 오류시 예외가 발생한다.
 	 */
 	boolean isLoging(User user) throws SQLException;
+	
+	User getLogin(User user) throws SQLException;
 }

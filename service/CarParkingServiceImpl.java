@@ -24,8 +24,7 @@ public class CarParkingServiceImpl implements CarParkingService {
 
 	@Override
 	public List<Parking> getUserAdressPaking(User user) throws SQLException {
-		User findUser = userdao.getUserAdress(user.getId(), user.getPassword());
-		List<Parking> parks = carparking.getDetailParkingByAdress(findUser.getAdress());
+		List<Parking> parks = carparking.getDetailParkingByAdress(user.getAdress());
 		return parks;
 	}
 
@@ -49,13 +48,19 @@ public class CarParkingServiceImpl implements CarParkingService {
 
 	@Override
 	public void reviseUser(User user) throws SQLException {
-		userdao.updateUser(user);
+		User findUser = null;
+		user.setId(user.getId());
+		user.setName(user.getName());
+		user.setEmailAdress(user.getEmailAdress());;
+		userdao.updateUser(findUser);
 		
 	}
 
 	@Override
 	public void removeUser(User user) throws SQLException {
-		userdao.removeUser(user.getId(), user.getPassword());
+		User findUser = selectUser(user.getId(), user.getId());
+		System.out.println(findUser.getId());
+		userdao.removeUser(findUser.getId(), findUser.getPassword());
 		
 	}
 
@@ -66,5 +71,12 @@ public class CarParkingServiceImpl implements CarParkingService {
 			isLogin = true;
 		} 
 		return isLogin;
+	}
+
+	@Override
+	public User getLogin(User user) throws SQLException {
+		User finduser = null;
+		finduser = selectUser(user.getId(), user.getPassword());
+		return finduser;
 	}
 }

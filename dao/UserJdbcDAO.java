@@ -14,8 +14,8 @@ public class UserJdbcDAO implements UserDAO{
 		User user = null;
 		String sql = "select parking_cars_user_adress "
 				+"from tb_parking_cars_users "
-				+"where parking_user_id = ?, "
-				+"and parking_user_password = ? ";
+				+"where parking_cars_user_id = ? "
+				+"and parking_cars_user_password = ? ";
 		Connection connection = getConnection();
 		PreparedStatement ptmt = connection.prepareStatement(sql);
 		ptmt.setString(1, id);
@@ -33,22 +33,22 @@ public class UserJdbcDAO implements UserDAO{
 
 	@Override
 	public void updateUser(User user) throws SQLException {
-		User users = user;
-		String sql = "update "+ "tb_parking_cars_users"
+		
+		String sql = "update tb_parking_cars_users "
 				+"set "
 				+"parking_cars_user_name = ?, "
 				+"parking_cars_user_adress = ?, "
-				+"parking_cars_user_email_adress = ?"
-				+" where parking_cars_user_id = ?, "
-				+"and parking_cars_user_password = ?";
+				+"parking_cars_user_email_adress = ? "
+				+" where "
+				+ " parking_cars_user_id = ? ";
 			
 		Connection connection = getConnection();
 		PreparedStatement ptmt = connection.prepareStatement(sql);
-		ptmt.setString(1, users.getName());
-		ptmt.setString(2, users.getAdress());
-		ptmt.setString(3, users.getEmailAdress());
-		ptmt.setString(4, users.getId());
-		ptmt.setString(5, users.getPassword());
+		ptmt.setString(1, user.getName());
+		ptmt.setString(2, user.getAdress());
+		ptmt.setString(3, user.getEmailAdress());
+		ptmt.setString(4, user.getId());
+
 		
 		ptmt.executeUpdate();
 		
@@ -61,11 +61,12 @@ public class UserJdbcDAO implements UserDAO{
 		
 		String sql = "delete from tb_parking_cars_users "
 				+" where parking_cars_user_id = ? "
-				+"and parking_cars_user_password = ? ";
+				+ "and parking_cars_user_password = ? ";
 		Connection connection = getConnection();
 		PreparedStatement ptmt = connection.prepareStatement(sql);
 		ptmt.setString(1, id);
 		ptmt.setString(2, password);
+		
 		ptmt.executeUpdate();
 		
 		ptmt.close();
@@ -75,9 +76,8 @@ public class UserJdbcDAO implements UserDAO{
 	@Override
 	public void insertUser(User user) throws SQLException {
 		
-		String sql = "insert into tb_parking_cars_users (parking_cars_user_id,parking_cars_user_password,parking_cars_user_name,) "
-				+"(parking_cars_user_adress, parking_cars_user_email_adress) "
-				+"values (?, ?, ?, ?, ?) ";
+		String sql = "insert into tb_parking_cars_users (parking_cars_user_id,parking_cars_user_password,parking_cars_user_name, parking_cars_user_adress, parking_cars_user_email_adress) "
+				+"values (?, ?, ?, ?, ? ) ";
 		Connection connection = getConnection();
 		PreparedStatement ptmt = connection.prepareStatement(sql);
 		
@@ -96,9 +96,9 @@ public class UserJdbcDAO implements UserDAO{
 	@Override
 	public User getAllUser(String id) throws SQLException {
 		User user = null;
-		String sql = "select tb_parking_cars_user_id, parking_cars_user_name ,parking_cars_user_adress "
-				+"from tb_parking_cars_users"
-				+"where = ? ";
+		String sql = "select parking_cars_user_id, parking_cars_user_name ,parking_cars_user_adress "
+				+"from tb_parking_cars_users "
+				+"where PARKING_CARS_USER_ID = ? ";
 		Connection connection = getConnection();
 		PreparedStatement ptmt = connection.prepareStatement(sql);
 		ptmt.setString(1, id);

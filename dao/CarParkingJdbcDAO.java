@@ -57,16 +57,17 @@ public class CarParkingJdbcDAO implements CarParkingDAO {
 	@Override
 	public List<Parking> getDetailParkingByAdress(String adress) throws SQLException {
 		List<Parking> parks = new ArrayList<>();
-		String sql = "select distinct parking_no, parking_name, parking_adress, praking_kinds, praking_division, parking_tell_number, "
+		String sql = "select parking_no, parking_name, parking_adress, praking_kinds, praking_division, parking_tell_number, "
 				+"parking_pay, parking_night_open, parking_sat_pay, parking_sun_pay, parking_basic_price, "
 				+"parking_basic_time, parking_add_price, parking_add_time "
 				+"from tb_parking_cars "
-				+ "where parking_adress like '%' || ? || '%' ";
+				+"where parking_adress like '%' || ? || '%' ";
 		Connection connection = getConnection();
 		PreparedStatement ptmt = connection.prepareStatement(sql);
 		ptmt.setString(1, adress);
 		ResultSet rs = ptmt.executeQuery();
 		repeatGetParking(parks, rs);
+		
 		rs.close();
 		ptmt.close();
 		connection.close();
@@ -76,7 +77,7 @@ public class CarParkingJdbcDAO implements CarParkingDAO {
 	@Override
 	public List<Parking> getDetailParkingByName(String name) throws SQLException {
 		List<Parking> parks = new ArrayList<>();
-		String sql = "select distinct parking_no, parking_name, parking_adress, praking_kinds, praking_division, parking_tell_number, "
+		String sql = "select parking_no, parking_name, parking_adress, praking_kinds, praking_division, parking_tell_number, "
 				+"parking_pay, parking_night_open, parking_sat_pay, parking_sun_pay, parking_basic_price, "
 				+"parking_basic_time, parking_add_price, parking_add_time "
 				+"from tb_parking_cars "
@@ -86,6 +87,7 @@ public class CarParkingJdbcDAO implements CarParkingDAO {
 		ptmt.setString(1, name);
 		ResultSet rs = ptmt.executeQuery();
 		repeatGetParking(parks, rs);
+		
 		rs.close();
 		ptmt.close();
 		connection.close();
@@ -96,7 +98,7 @@ public class CarParkingJdbcDAO implements CarParkingDAO {
 	@Override
 	public List<Parking> getDetailParkingBydivision(String division) throws SQLException {
 		List<Parking> parks = new ArrayList<>();
-		String sql = "select distinct parking_no, parking_name, parking_adress, praking_kinds, praking_division, parking_tell_number, "
+		String sql = "select parking_no, parking_name, parking_adress, praking_kinds, praking_division, parking_tell_number, "
 				+"parking_pay, parking_night_open, parking_sat_pay, parking_sun_pay, parking_basic_price, "
 				+"parking_basic_time, parking_add_price, parking_add_time "
 				+"from tb_parking_cars "
