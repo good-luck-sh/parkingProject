@@ -12,7 +12,7 @@ public class UserJdbcDAO implements UserDAO{
 	@Override
 	public User getUserAdress(String id, String password) throws SQLException {
 		User user = null;
-		String sql = "select parking_cars_user_adress "
+		String sql = "select parking_cars_user_adress,parking_cars_user_id, parking_cars_user_password  "
 				+"from tb_parking_cars_users "
 				+"where parking_cars_user_id = ? "
 				+"and parking_cars_user_password = ? ";
@@ -23,6 +23,8 @@ public class UserJdbcDAO implements UserDAO{
 		ResultSet rs = ptmt.executeQuery();
 		if(rs.next()) {
 		user = new User();
+		user.setId(rs.getString("parking_cars_user_id"));
+		user.setPassword(rs.getString("parking_cars_user_password"));
 		user.setAdress(rs.getString("parking_cars_user_adress"));
 		}
 		rs.close();
@@ -33,7 +35,6 @@ public class UserJdbcDAO implements UserDAO{
 
 	@Override
 	public void updateUser(User user) throws SQLException {
-		
 		String sql = "update tb_parking_cars_users "
 				+"set "
 				+"parking_cars_user_name = ?, "
@@ -44,6 +45,7 @@ public class UserJdbcDAO implements UserDAO{
 			
 		Connection connection = getConnection();
 		PreparedStatement ptmt = connection.prepareStatement(sql);
+		System.out.println(user.getAdress());
 		ptmt.setString(1, user.getName());
 		ptmt.setString(2, user.getAdress());
 		ptmt.setString(3, user.getEmailAdress());
