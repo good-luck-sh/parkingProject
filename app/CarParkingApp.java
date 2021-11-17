@@ -185,7 +185,6 @@ public class CarParkingApp {
 		System.out.print("변경할 주소를 입력하세요 : ");
 		String newAdress = readString();
 		user.setAdress(newAdress);
-		System.out.println(user.getId());
 		carparking.reviseUser(user);
 		System.out.println("수정이 완료되었습니다. ");
 	}
