@@ -36,7 +36,7 @@
 			<ol>
 				<li><a href="searchloginadress.jsp?id=<%=id%>&password=<%=password%>">로그인 주소로 검색하기</a></li>
 				<li><a href="search.jsp?id=<%=id%>&password=<%=password%>">다른 지역구 검색하기</a></li>
-				<li><a href="update.jsp?id=<%=id%>&password=<%=password%>">정보 수정하기</a></li>
+				<li><a href="updateUser.jsp?id=<%=id%>&password=<%=password%>">정보 수정하기</a></li>
 				<li><a href="delete.jsp?id=<%=id%>&password=<%=password%>">탈퇴하기</a></li>
 			</ol>
 		</div>

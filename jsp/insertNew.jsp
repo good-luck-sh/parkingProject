@@ -1,16 +1,15 @@
 <%@page import="com.project.service.CarParkingServiceImpl"%>
 <%@page import="com.project.vo.User"%>
+<%@page import="com.project.dao.UserJdbcDAO"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%
-	
-	String id = request.getParameter("id");
+	String id = request.getParameter("userid");
 	String password = request.getParameter("password");
+	String name = request.getParameter("username");
 	String adress1 = request.getParameter("adress1");
 	String adress2 = request.getParameter("adress2");
-	String email = request.getParameter("useremail");
-	String name = request.getParameter("username");
-	
 	String adress = adress1 + adress2;
+	String email = request.getParameter("useremail");
 	
 	User user = new User();
 	user.setId(id);
@@ -18,9 +17,8 @@
 	user.setName(name);
 	user.setAdress(adress);
 	user.setEmailAdress(email);
-	
 	CarParkingServiceImpl carService = new CarParkingServiceImpl();
-	carService.reviseUser(user);
+	carService.userAdd(user);
 
-	response.sendRedirect("detail.jsp?id="+request.getParameter("id")+"&password="+request.getParameter("password"));
+	response.sendRedirect("detail.jsp?id="+request.getParameter("userid")+"&password="+request.getParameter("password"));
 %>

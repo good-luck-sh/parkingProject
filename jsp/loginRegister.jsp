@@ -10,7 +10,7 @@
 	String password = request.getParameter("password");
 	User user= userDao.getUserAdress(id,password);
 	if (user == null) {
-		throw new SQLException();
+		response.sendRedirect("loginRegister.jsp");
 	} else {
 		response.sendRedirect("detail.jsp?id="+request.getParameter("userid")+"&password="+request.getParameter("password"));
 	}
