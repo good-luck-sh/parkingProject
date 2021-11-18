@@ -14,8 +14,7 @@
 <br>
 <br>
 <br>
-프로젝트 완료 (2021/11/17)했습니다.
-완성된 화면입니다.
+프로젝트 완료 (2021/11/17)했습니다.----2021/11/18 오늘 비밀번호를 암호화하는방법과 session객체를 배웠기 때문에 수정하여 다시 commit을 진행하도록하겠습니다.
 
 ![화면 캡처 2021-11-17 220457](https://user-images.githubusercontent.com/79691180/142206586-b8c052fa-2eff-4972-a34f-2790649cf342.jpg)
 ![화면 캡처 2021-11-17 220528](https://user-images.githubusercontent.com/79691180/142206589-bb03ced9-220e-42af-b68f-b4a8783feb7e.jpg)
