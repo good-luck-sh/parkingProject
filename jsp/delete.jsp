@@ -1,12 +1,14 @@
+<%@page import="com.project.vo.User"%>
 <%@page import="com.project.dao.UserJdbcDAO"%>
 <%@page import="com.project.dao.UserDAO"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%
-	String id = request.getParameter("id");
-	String password = request.getParameter("password");
-	UserJdbcDAO userjdbcDao = new UserJdbcDAO();
-	userjdbcDao.removeUser(id, password);
 	
-	response.sendRedirect("home.jsp");
+	User loginUserInfo = (User)session.getAttribute("LOGIN_USER_INFO");
+
+	UserJdbcDAO userjdbcDao = UserJdbcDAO.getInstance();
+	userjdbcDao.removeUser(loginUserInfo.getId(), loginUserInfo.getPassword());
+	
+	response.sendRedirect("home.jsp?succes=complete");
 	
 %>

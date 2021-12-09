@@ -9,7 +9,22 @@
     <title>회원가입</title>
 </head>
 <body>
-<div class="container p-5 my-5 bg-primary text-white align-text">회원가입 하기</div>
+<%
+	pageContext.setAttribute("menu", "login");
+	//네비바 활성화를 위하여 pageContext에서 값을 꺼내온다.
+%>
+<%@ include file="nav.jsp" %>
+<%
+	String fail = request.getParameter("fail");
+	if ("id".equals(fail)) {
+%>
+		<div class="alert alert-danger">
+			<p><strong>가입 실패!!</strong> 아이디가 중복됩니다.</p>
+		</div>
+<%
+	}
+%>
+<div class="container p-5 my-5 bg-success text-white align-text">회원가입 하기</div>
 <div class ="container">
 	<div class="row">
 		<div class="col">
@@ -30,7 +45,7 @@
   				<label class="form-label" for="user-adress">검색하고자 하는 구를 입력하세요</label>
 				<select class="form-select" name="adress1" id="userAdress">
 							<option value="" disabled="disabled" selected="selected">선택하세요</option>
-							<option value="도봉구 ">도붕구</option>
+							<option value="도봉구 ">도봉구</option>
 							<option value="노원구 ">노원구</option>
 							<option value="중랑구 ">중랑구</option>
 							<option value="광진구 ">광진구</option>
@@ -68,7 +83,7 @@
   			<input type="email" class="form-control" name="useremail">
 		</div>
 		<div class="d-grid gap-3">
-			<button class="btn btn-outline-primary" type="submit">로그인</button>
+			<button class="btn btn-outline-primary" type="submit">회원가입</button>
   			<button class="btn btn-outline-secondary"><a href="home.jsp">뒤로가기</a></button>
 		</div>
 		</form>

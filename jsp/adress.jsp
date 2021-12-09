@@ -1,3 +1,4 @@
+<%@page import="oracle.jdbc.proxy.oracle$1jdbc$1replay$1driver$1NonTxnReplayableResultSet$2oracle$1jdbc$1internal$1OracleResultSet$$$Proxy"%>
 <%@page import="com.project.vo.Parking"%>
 <%@page import="java.util.List"%>
 <%@page import="com.project.service.CarParkingServiceImpl"%>
@@ -13,18 +14,25 @@
 </head>
 <body>
 <%
-	String id = request.getParameter("id");
-	String password = request.getParameter("password");
+	pageContext.setAttribute("menu", "login");
+	//네비바 활성화를 위하여 pageContext에서 값을 꺼내온다.
+%>
+<%@ include file="nav.jsp" %>
+<%
+	if(loginUserInfo == null) {
+		response.sendRedirect("login.jsp?fail=login");
+		return;
+	}
 	String adress1 = request.getParameter("adress1");
 	String adress2 = request.getParameter("adress2");
-	System.out.println(adress1);
-	
+
 	String adress = adress1 + adress2;
-	System.out.println(adress);
 	CarParkingServiceImpl carService = new CarParkingServiceImpl();
 	List<Parking> parking = carService.getSearchParking(adress);
 	
 %>
+
+
 
 	<div class ="container-fluid">
 	<div class="row">
@@ -34,7 +42,7 @@
 	  	<div class="table-responsive">
 	   		<table class="table table-hover align-middle">
 	   			<thead class="table-dark ">
-	   				<tr class="align-middle"">
+	   				<tr class="align-middle">
 	   					<th>번호</th>
 		   				<th>이름</th>
 		   				<th>주소</th>
@@ -54,7 +62,16 @@
 		   		<tbody>
 <%
 	for(Parking park : parking) {
-		
+		if(park.getNo() == 0 ) {
+%>
+			<div class="row">
+				<div class="col">
+					<h4>해당하는 주소에 공영주차장이 존재하지 않습니다.</h4>
+					<p>서비스를 준비하겠습니다. </p>
+				</div>
+			</div>
+<% 
+		} else {
 %>
 		   			<tr class="align-middle">
 		   				<td><%=park.getNo() %></td>
@@ -73,17 +90,18 @@
 		   				<td><%=park.getAddTime() %></td>
 		   			</tr>
 <%
-}
+}}
 %>
 		   		</tbody>
 		   </table>
-			</div>
+		</div>
 		</div>
 		
 	   <div class="d-grid gap-3">
-	   		<button class="btn btn-outline-secondary"><a href="detail.jsp?id=<%=id%>&password=<%=password%>">뒤로가기</a></button>
-  			<button class="btn btn-outline-secondary"><a href="logout.jsp">로그아웃</a></button>
+	   		<button class="btn btn-outline-secondary"><a href="detail.jsp">뒤로가기</a></button>
+  			<button class="btn btn-outline-secondary"><a href="userlogout.jsp">로그아웃</a></button>
 		</div>
+	</div>
 </div>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script> 
 </body>

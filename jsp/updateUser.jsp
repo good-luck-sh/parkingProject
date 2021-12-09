@@ -12,11 +12,20 @@
 </head>
 <body>
 <%
-	String id = request.getParameter("id");
-	String password = request.getParameter("password");
+
+pageContext.setAttribute("menu", "login");
+//네비바 활성화를 위하여 pageContext에서 값을 꺼내온다.
+%>
+<%@ include file="nav.jsp" %>
+<% 
+	if(loginUserInfo == null) {
+		response.sendRedirect("login.jsp?fail=login");
+		return;
+	}
+
 	CarParkingServiceImpl carService = new CarParkingServiceImpl();
-	UserJdbcDAO userDao = new UserJdbcDAO();
-	User user = userDao.getUserAdress(id, password);
+	UserJdbcDAO userDao = UserJdbcDAO.getInstance();
+	User user = userDao.getUserAdress(loginUserInfo.getId());
 %>
 <div class ="container p-5 my-5 bg-primary text-white align-text">
 	<div class="row">
@@ -27,12 +36,12 @@
 	</div>
 	<div class="row">
 		<div class="col">
-		<form action="update.jsp?id=<%=id %>" method="post">
+		<form action="update.jsp" method="post">
 		<div class="row">
 			<div class="col">
 				<div class="mb-3">
 				<label for="exampleFormControlInput1" class="form-label">아이디 입력</label>
-  				<input type="text" class="form-control" name="userid" required="required" value="<%=user.getId() %>" disabled="disabled">
+  				<input type="text" class="form-control" name="" required="required" value="<%=user.getId() %>" readonly="readonly">
 				</div>
 			</div>
 		</div>
@@ -91,7 +100,7 @@
 			</div>
 			<div class="d-grid gap-3">
 				<button class="btn btn-primary" type="submit">수정하기</button>
-	  			<button class="btn btn-outline-secondary"><a href="home.jsp">뒤로가기</a></button>
+	  			<button class="btn btn-outline-secondary"><a href="detail.jsp">뒤로가기</a></button>
 	  		</div>
 			</form>
 		</div>

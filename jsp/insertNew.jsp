@@ -1,3 +1,4 @@
+<%@page import="org.apache.commons.codec.digest.DigestUtils"%>
 <%@page import="com.project.service.CarParkingServiceImpl"%>
 <%@page import="com.project.vo.User"%>
 <%@page import="com.project.dao.UserJdbcDAO"%>
@@ -11,14 +12,24 @@
 	String adress = adress1 + adress2;
 	String email = request.getParameter("useremail");
 	
+	String userPassword = DigestUtils.sha256Hex(password);
+	//비밀번호를 암호화한다.
 	User user = new User();
 	user.setId(id);
-	user.setPassword(password);
+	user.setPassword(userPassword);
 	user.setName(name);
 	user.setAdress(adress);
 	user.setEmailAdress(email);
+	
 	CarParkingServiceImpl carService = new CarParkingServiceImpl();
+	
+	UserJdbcDAO userDao = UserJdbcDAO.getInstance();
+	User saveduser = userDao.getAllUser(id);
+	if(saveduser != null) {
+		response.sendRedirect("new.jsp?fail=id");
+		return;
+	}
+	
 	carService.userAdd(user);
-
-	response.sendRedirect("detail.jsp?id="+request.getParameter("userid")+"&password="+request.getParameter("password"));
+	response.sendRedirect("login.jsp?succes=new");
 %>

@@ -9,9 +9,17 @@
     <title>검색하기</title>
 </head>
 <body>
+
 <%
-	String id = request.getParameter("id");
-	String password = request.getParameter("password");
+	pageContext.setAttribute("menu", "login");
+	//네비바 활성화를 위하여 pageContext에서 값을 꺼내온다.
+%>
+<%@ include file="nav.jsp" %>
+<%
+	if(loginUserInfo == null) {
+		response.sendRedirect("login.jsp?fail=login");
+		return;
+	}
 %>
 <div class ="container p-5 my-5 bg-black text-white align-text">
 	<div class="row ">
@@ -27,13 +35,13 @@
 	</div>
 	<div>
 		<div>
-			<form action="adress.jsp?id=<%=id %>&password=<%=password %>" method="post">
+			<form action="adress.jsp" method="post">
 				<div class="row">
 					<div class="col mb-3">
 						<label class="form-label" for="user-adress">검색하고자 하는 구를 입력하세요</label>
 						<select class="form-select" name="adress1" id="userAdress">
 							<option value="" disabled="disabled" selected="selected">선택하세요</option>
-							<option value="도봉구 ">도붕구</option>
+							<option value="도봉구 ">도봉구</option>
 							<option value="노원구 ">노원구</option>
 							<option value="중랑구 ">중랑구</option>
 							<option value="광진구 ">광진구</option>
@@ -70,7 +78,7 @@
 				<div class="col mb-3 mt-5">
 					<div class="d-grid gap-3">
 						<button class="btn btn-outline-primary" type="submit">찾기</button>
-			  			<button class="btn btn-outline-secondary"><a href="detail.jsp?id=<%=id%>&password=<%=password%>">뒤로가기</a></button>
+			  			<button class="btn btn-outline-secondary"><a href="detail.jsp">뒤로가기</a></button>
 					</div>
 				</div>
 			</div>

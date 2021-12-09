@@ -7,57 +7,59 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" >
 	    <title>서울시 주차를 부탁해</title>
 </head>
-<div class="p-5 bg-primary text-white text-center">
+<%
+	pageContext.setAttribute("menu", "login");
+	//네비바 활성화를 위하여 pageContext에서 값을 꺼내온다.
+%>
+<%@ include file="nav.jsp" %>
+<%
+	String succes = request.getParameter("succes");
+	if("complete".equals(succes)) {
+%>
+		<div class="alert alert-danger">
+		<p><strong>탈퇴 완료</strong> 탈퇴완료되었습니다.</p>
+		</div>
+<% 
+	}
+%>
+<div class="p-5 bg-success text-white text-center">
   <h1>서울시 주차를 부탁해</h1>
   <p>서울시 주소를 검색하면 동네 주소에 해당하는 서울시 공영 주차장 정보가 나오는 웹 페이지 입니다.</p> 
 </div>
 
-<nav class="navbar navbar-expand-sm bg-dark navbar-dark">
-  <div class="container">
-    <ul class="navbar-nav">
-      <li class="nav-item">
-        <a class="nav-link active" href="home.jsp??no=1">홈</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" href="login.jsp?no=1">로그인</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" href="new.jsp?no=1">회원가입</a>
-      </li>
-    </ul>
-  </div>
-</nav>
-
-<div class="container mt-5">
+<div class="container mt-3">
   <div class="row">
     <div class="col-sm-4">
   		<div class="card" style="width:100%">
   	    	<div class="card-body">
   	 			<h4 class="card-title">만든이 : 김승희</h4>
-   				<p class="card-text">2021년 10월 28일 기준으로 제작한 토이 프로젝트 입니다.</p>
+   				<p class="card-text">2021년 10월 28일 기준으로 제작한 토이 프로젝트 입니다.<br>
+   					해당하는 주소가 없으면 공백으로 출력됩니다.<br> 이용해주셔서 감사합니다.
+   				</p>
   			</div>
 		</div>
 	<div class="card">
 		<div class="card-header">
 			<h3 class="mt-4">링크를 클릭하세요</h3>
 			<div class="card-body">
-				 <ul class="list-group list-group-flush">
-        			<li class="list-group-item active">
-         		    	<a class="btn btn-outline-primary" href="home.jsp??no=1">홈</a>
+				 <ul class="list-group list-group-item">
+        			<li class="list-group-item">
+         		    	<a class="btn btn-outline-dark" href="home.jsp">홈</a>
         			</li>
         			<li class="list-group-item">
-          				<a class="btn btn-outline-primary" href="login.jsp?no=1">로그인</a>
+          				<a class="btn btn-outline-dark" href="login.jsp">로그인</a>
        				</li>
         			<li class="list-group-item">
-          				<a class="btn btn-outline-primary" href="new.jsp?no=1">회원가입</a>
+          				<a class="btn btn-outline-dark" href="new.jsp">회원가입</a>
         			</li>
+        			</ul>
 			</div>
 		</div>
 	</div>
       <hr class="d-sm-none">
     </div>
     <div class="col-sm-8">
-      <h2>주차장 출력하기</h2>
+      <h2 class="mt-4">주차장 출력하기</h2>
       <h5>2021년 10월 28일 기준</h5>
       <p>전체 주차장 출력 하기</p>
       <p>로그인을 진행하면 해당 주소의 주차장이 출력됩니다.</p>
@@ -107,7 +109,7 @@
 </div>
 
 <div class="mt-5 p-4 bg-dark text-white text-center">
-  <p>Footer</p>
+  <p>주차장 서비스는 업그레이드 됩니다!</p>
 </div>
 
 </body>

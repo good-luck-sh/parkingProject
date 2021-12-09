@@ -1,3 +1,4 @@
+<%@page import="com.project.vo.User"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <!doctype html>
 <html lang="ko">
@@ -10,18 +11,25 @@
 </head>
 <body>
 <%
-	String id = request.getParameter("id");
-	String password = request.getParameter("password");
+	pageContext.setAttribute("menu", "login");
+	//네비바 활성화를 위하여 pageContext에서 값을 꺼내온다.
 %>
-<nav class="navbar navbar-expand-sm bg-dark navbar-dark">
-  <div class="container">
-    <ul class="navbar-nav">
-      <li class="nav-item">
-        <a class="nav-link" href="login.jsp">로그아웃</a>
-      </li>
-    </ul>
-  </div>
-</nav>
+<%@ include file="nav.jsp" %>
+<%
+	if(loginUserInfo == null) {
+		response.sendRedirect("login.jsp?fail=login");
+		return;
+	}
+	String login = request.getParameter("success");
+	if("login".equals(login)) {
+%>
+	<div class="alert alert-primary">
+		<p><strong>로그인성공</strong>즐거운 이용되세요</p>
+	</div>
+<% 
+	}
+	
+%>
 <div class ="container">
 	<div class="row">
 		<div class="col">
@@ -34,17 +42,17 @@
 	<div class="row">
 		<div class="col">
 			<ol>
-				<li><a href="searchloginadress.jsp?id=<%=id%>&password=<%=password%>">로그인 주소로 검색하기</a></li>
-				<li><a href="search.jsp?id=<%=id%>&password=<%=password%>">다른 지역구 검색하기</a></li>
-				<li><a href="updateUser.jsp?id=<%=id%>&password=<%=password%>">정보 수정하기</a></li>
-				<li><a href="delete.jsp?id=<%=id%>&password=<%=password%>">탈퇴하기</a></li>
+				<li><a href="searchloginadress.jsp">로그인 주소로 검색하기</a></li>
+				<li><a href="search.jsp">다른 지역구 검색하기</a></li>
+				<li><a href="updateUser.jsp">정보 수정하기</a></li>
+				<li><a href="delete.jsp">탈퇴하기</a></li>
 			</ol>
 		</div>
 	</div>
 	<div  class="row">
 		<div class="col">
 			<div class="d-grid gap-2">
-				 <button class="btn btn-outline-primary" type="button" ><a href="logout.jsp">로그아웃</a></button>
+				 <button class="btn btn-outline-primary" type="button" ><a href="userlogout.jsp">로그아웃</a></button>
 			</div>		
 		</div>
 	</div>

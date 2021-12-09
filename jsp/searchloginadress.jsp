@@ -16,10 +16,17 @@
 </head>
 <body>
 <%
-	String id = request.getParameter("id");
-	String password = request.getParameter("password");
-	UserJdbcDAO userDao = new UserJdbcDAO();
-	CarParkingJdbcDAO carDao = new CarParkingJdbcDAO();
+	pageContext.setAttribute("menu", "login");
+	//네비바 활성화를 위하여 pageContext에서 값을 꺼내온다.
+%>
+<%@ include file="nav.jsp" %>
+<%
+	if(loginUserInfo == null) {
+		response.sendRedirect("login.jsp?fail=login");
+		return;
+	}
+	UserJdbcDAO userDao = UserJdbcDAO.getInstance();
+	CarParkingJdbcDAO carDao = CarParkingJdbcDAO.getInstance();
 	CarParkingServiceImpl carservice = new CarParkingServiceImpl();
 	
 %>
@@ -55,8 +62,8 @@
 	   		<tbody>
 	   		<%
 
-	User user = userDao.getUserAdress(id, password);
-	List<Parking> parks = carservice.getUserAdressPaking(user);
+	User findUser = userDao.getUserAdress(loginUserInfo.getId());
+	List<Parking> parks = carservice.getUserAdressPaking(findUser);
 	for(Parking park : parks) {
 		
 %>
@@ -86,9 +93,10 @@
 	
 
 	   <div class="d-grid gap-3">
-	   		<button class="btn btn-outline-secondary"><a href="detail.jsp?id=<%=id%>&password=<%=password%>">뒤로가기</a></button>
-  			<button class="btn btn-outline-secondary"><a href="logout.jsp">로그아웃</a></button>
+	   		<button class="btn btn-outline-secondary"><a href="detail.jsp">뒤로가기</a></button>
+  			<button class="btn btn-outline-secondary"><a href="userlogout.jsp">로그아웃</a></button>
 		</div>
+	</div>
 </div>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script> 
 </body>
