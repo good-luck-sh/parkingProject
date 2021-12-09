@@ -1,4 +1,4 @@
-package parkingProject.vo;
+package com.project.vo;
 
 public class User {
 	

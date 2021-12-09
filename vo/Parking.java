@@ -1,4 +1,5 @@
-package parkingProject.vo;
+package com.project.vo;
+
 
 public class Parking {//공영주차장
 

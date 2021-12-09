@@ -1,10 +1,10 @@
-package parkingProject.service;
+package com.project.service;
 
 import java.sql.SQLException;
+
 import java.util.List;
 
-import parkingProject.vo.Parking;
-import parkingProject.vo.User;
+import com.project.vo.*;
 
 public interface CarParkingService {
 

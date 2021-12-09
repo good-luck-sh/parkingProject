@@ -1,9 +1,9 @@
-package parkingProject.dao;
+package com.project.dao;
 
 import java.sql.SQLException;
 import java.util.List;
 
-import parkingProject.vo.Parking;
+import com.project.vo.Parking;
 
 public interface CarParkingDAO {
 

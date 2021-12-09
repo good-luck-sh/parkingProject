@@ -1,11 +1,19 @@
-package parkingProject.dao;
+package com.project.dao;
 
 import java.sql.SQLException;
 
-import parkingProject.vo.User;
+import com.project.vo.User;
+
 
 public interface UserDAO {
 
+	/**
+	 * User의 객체를 아이디를 통해 획득할 수 있다. 
+	 * @param id  user의 아이디
+	 * @return 해당하는 User 객체 
+	 * @throws SQLException DB Access 오류시 예외가 발생한다.
+	 */
+	User getUserAdress(String id) throws SQLException;
 	/**
 	 * User의 객체를 아이디와 패스워드를 통해 획득할 수 있다. 
 	 * @param id  user의 아이디

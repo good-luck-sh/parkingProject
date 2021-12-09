@@ -1,20 +1,17 @@
-package parkingProject.service;
+package com.project.service;
 
 import java.sql.SQLException;
+
 import java.util.List;
 
-import parkingProject.dao.CarParkingDAO;
-import parkingProject.dao.CarParkingJdbcDAO;
-import parkingProject.dao.UserDAO;
-import parkingProject.dao.UserJdbcDAO;
-import parkingProject.exception.ParkingException;
-import parkingProject.vo.Parking;
-import parkingProject.vo.User;
+import com.project.dao.*;
+import com.project.vo.*;
+
 
 public class CarParkingServiceImpl implements CarParkingService {
 	
-		private CarParkingDAO carparking = new CarParkingJdbcDAO();
-		private UserDAO userdao = new UserJdbcDAO();
+		private CarParkingDAO carparking = CarParkingJdbcDAO.getInstance();
+		private UserDAO userdao = UserJdbcDAO.getInstance();
 		
 
 	@Override
@@ -40,7 +37,7 @@ public class CarParkingServiceImpl implements CarParkingService {
 		User user = null;
 		user = userdao.getUserAdress(id, password);
 		if(user == null) {
-			throw new ParkingException("## 오류: 입력하신 정보가 없습니다.");
+			throw new SQLException("## 오류: 입력하신 정보가 없습니다.");
 		}
 		return user;
 	}
@@ -48,14 +45,13 @@ public class CarParkingServiceImpl implements CarParkingService {
 	@Override
 	public void userAdd(User user) throws SQLException {
 		if(user == null) {
-			throw new ParkingException("## 오류: 입력한 정보가 중복됩니다.");
+			throw new SQLException("## 오류: 입력한 정보가 중복됩니다.");
 		}
 		userdao.insertUser(user);
 	}
 
 	@Override
 	public void reviseUser(User user) throws SQLException {
-		System.out.println(user.getAdress());
 		userdao.updateUser(user);
 		
 	}

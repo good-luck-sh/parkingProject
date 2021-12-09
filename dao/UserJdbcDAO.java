@@ -1,18 +1,48 @@
-package parkingProject.dao;
+package com.project.dao;
 
-import static parkingProject.util.ConnectionUtil.getConnection;
+import static com.project.util.ConnectionUtil.getConnection;
+
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import parkingProject.vo.User;
-public class UserJdbcDAO implements UserDAO{
+import com.project.vo.User;
+public class UserJdbcDAO implements UserDAO {
+	
+	private static UserJdbcDAO self = new UserJdbcDAO();
+	private UserJdbcDAO() {}
+	public static UserJdbcDAO getInstance() {
+		return self;
+	}
+	
+	public User getUserAdress(String id) throws SQLException {
+		User user = null;
+		String sql = "select parking_cars_user_adress,parking_cars_user_id,parking_cars_user_name, parking_cars_user_password,parking_cars_user_email_adress  "
+				+ "from tb_parking_cars_users "
+				+"where parking_cars_user_id = ? ";
+		Connection connection = getConnection();
+		PreparedStatement ptmt = connection.prepareStatement(sql);
+		ptmt.setString(1, id);
+		ResultSet rs = ptmt.executeQuery();
+		if(rs.next()) {
+		user = new User();
+		user.setId(rs.getString("parking_cars_user_id"));
+		user.setName(rs.getString("parking_cars_user_name"));
+		user.setPassword(rs.getString("parking_cars_user_password"));
+		user.setAdress(rs.getString("parking_cars_user_adress"));
+		user.setEmailAdress(rs.getString("parking_cars_user_email_adress"));
+		}
+		rs.close();
+		ptmt.close();
+		connection.close();
+		return user;
+	}
 
 	@Override
 	public User getUserAdress(String id, String password) throws SQLException {
 		User user = null;
-		String sql = "select parking_cars_user_adress,parking_cars_user_id, parking_cars_user_password  "
+		String sql = "select parking_cars_user_adress,parking_cars_user_id,parking_cars_user_name, parking_cars_user_password,parking_cars_user_email_adress  "
 				+"from tb_parking_cars_users "
 				+"where parking_cars_user_id = ? "
 				+"and parking_cars_user_password = ? ";
@@ -24,8 +54,10 @@ public class UserJdbcDAO implements UserDAO{
 		if(rs.next()) {
 		user = new User();
 		user.setId(rs.getString("parking_cars_user_id"));
+		user.setName(rs.getString("parking_cars_user_name"));
 		user.setPassword(rs.getString("parking_cars_user_password"));
 		user.setAdress(rs.getString("parking_cars_user_adress"));
+		user.setEmailAdress(rs.getString("parking_cars_user_email_adress"));
 		}
 		rs.close();
 		ptmt.close();
@@ -38,6 +70,7 @@ public class UserJdbcDAO implements UserDAO{
 		String sql = "update tb_parking_cars_users "
 				+"set "
 				+"parking_cars_user_name = ?, "
+				+"parking_cars_user_password = ?, "
 				+"parking_cars_user_adress = ?, "
 				+"parking_cars_user_email_adress = ? "
 				+" where "
@@ -45,11 +78,11 @@ public class UserJdbcDAO implements UserDAO{
 			
 		Connection connection = getConnection();
 		PreparedStatement ptmt = connection.prepareStatement(sql);
-		System.out.println(user.getAdress());
 		ptmt.setString(1, user.getName());
-		ptmt.setString(2, user.getAdress());
-		ptmt.setString(3, user.getEmailAdress());
-		ptmt.setString(4, user.getId());
+		ptmt.setString(2, user.getPassword());
+		ptmt.setString(3, user.getAdress());
+		ptmt.setString(4, user.getEmailAdress());
+		ptmt.setString(5, user.getId());
 
 		
 		ptmt.executeUpdate();

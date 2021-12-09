@@ -1,6 +1,6 @@
-package parkingProject.dao;
+package com.project.dao;
 
-import static parkingProject.util.ConnectionUtil.getConnection;
+import static com.project.util.ConnectionUtil.getConnection;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -9,11 +9,17 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-import parkingProject.vo.Parking;
+import com.project.vo.Parking;
 
 public class CarParkingJdbcDAO implements CarParkingDAO {
 
-	@Override
+	private static CarParkingJdbcDAO self = new CarParkingJdbcDAO();
+	private CarParkingJdbcDAO() {}
+	public static CarParkingJdbcDAO getInstance() {
+		return self;
+	}
+	
+
 	public List<Parking> getAllparking() throws SQLException {
 		List<Parking> parks = new ArrayList<>();
 		String sql = "select distinct parking_no, parking_name, parking_adress, praking_kinds, praking_division, parking_tell_number, "
