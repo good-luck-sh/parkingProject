@@ -29,6 +29,7 @@
 	String adress = adress1 + adress2;
 	CarParkingServiceImpl carService = new CarParkingServiceImpl();
 	List<Parking> parking = carService.getSearchParking(adress);
+
 	
 %>
 

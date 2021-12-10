@@ -15,42 +15,16 @@
 %>
 <%@ include file="nav.jsp" %>
 <% 
-	if(loginUserInfo == null) {
-		response.sendRedirect("login.jsp?fail=login");
-		return;
-	}
-	String fail = request.getParameter("fail");
+
 	String login = request.getParameter("succes");
 	if("new".equals(login)) {
 %>
 	<div class="alert alert-primary">
 		<p><strong>가입 성공</strong>로그인을 진행해주세요</p>
 	</div>
-<% 
-	}
-	if("login".equals(fail)) {
-%>
-	<div class="alert alert-danger">
-		<p><strong>로그인 실패</strong> 로그인을 진행해주세요</p>
-	</div>
-<% 
-	}
-	if("id".equals(fail)) {
-%>
-		<div class="alert alert-danger">
-		<p><strong>로그인 실패</strong>해당하는 아이디가 존재하지 않습니다.</p>
-	</div>
-<%
-	}
-	if("password".equals(fail)) {
-%>
-		<div class="alert alert-danger">
-		<p><strong>로그인 실패</strong> 비밀번호가 틀립니다.</p>
-	</div>
 <%
 	}
 %>
-
 
 
 <body>

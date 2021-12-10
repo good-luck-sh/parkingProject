@@ -27,7 +27,7 @@ pageContext.setAttribute("menu", "login");
 	UserJdbcDAO userDao = UserJdbcDAO.getInstance();
 	User user = userDao.getUserAdress(loginUserInfo.getId());
 %>
-<div class ="container p-5 my-5 bg-primary text-white align-text">
+<div class ="container p-5 my-5 bg-black text-white align-text">
 	<div class="row">
 		<div class="col">
 			 <h1>회원 정보 수정하기</h1>
