@@ -62,8 +62,8 @@
 		   		</thead>
 		   		<tbody>
 <%
-	for(Parking park : parking) {
-		if(park.getNo() == 0 ) {
+	if(parking.isEmpty()){
+	
 %>
 			<div class="row">
 				<div class="col">
@@ -73,6 +73,7 @@
 			</div>
 <% 
 		} else {
+	for(Parking park : parking) {
 %>
 		   			<tr class="align-middle">
 		   				<td><%=park.getNo() %></td>
